@@ -6,3 +6,9 @@ Herbert Simon, J.C Shaw and Allen Newell's General Problem Solver Program (GPS) 
 
 * [Common Lisp](/general_problem_solver.lisp)
 * [Python](/general_problem_solver.py) 
+* [Java](/general_problem_solver.java)
+* [C](/general_problem_solver_C/) (In Progress...)  
+
+### Other Resources For Understanding
+
+* [Description of the Program in Natural Language](/natlang_GPS_description.txt)
