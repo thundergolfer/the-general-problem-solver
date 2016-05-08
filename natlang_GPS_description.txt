@@ -1,0 +1,29 @@
+SOURCE: http://ai-su13.artifice.cc/gps.html
+
+begin:
+- save initial conditions as "current state"
+- try to achieve all goals
+
+how to achieve all goals:
+- for each goal:
+  - try to achieve the goal
+- if all goals were achieved, return success
+
+how to achieve a goal:
+- if goal is already met (in current state), return success (it's achieved)
+- else, for each operator:
+  - if operator's "add list" contains the goal,
+    - try to apply the operator
+    - if successful, return success
+- if no operators were successful,
+  - return failure
+
+how to apply an operator:
+- try to achieve all of the operator's preconditions (treat them as goals)
+- if successful (all preconditions met),
+  - mark the operator as "applied"
+  - add conditions in the operator's "add list" to the current state
+  - delete conditions in the operator's "delete list" from the current state
+  - return success
+- else,
+  - return failure
