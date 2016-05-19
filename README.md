@@ -12,3 +12,4 @@ Herbert Simon, J.C Shaw and Allen Newell's General Problem Solver Program (GPS) 
 ### Other Resources For Understanding
 
 * [Description of the Program in Natural Language](/natlang_GPS_description.txt)
+* [Norvig's retrospective on PAIP, and comments on the continuing relevance of LISP](http://norvig.com/Lisp-retro.html)
