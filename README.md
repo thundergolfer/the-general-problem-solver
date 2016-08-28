@@ -11,6 +11,7 @@ Herbert Simon, J.C Shaw and Allen Newell's General Problem Solver Program (GPS) 
 * [Python](/general_problem_solver.py)
 * [Java](/general_problem_solver.java)
 * [C](/general_problem_solver_C/) (In Progress...)  
+* [C++](/gps_cpp/) (In Progress...)
 
 ### Other Resources For Understanding
 
