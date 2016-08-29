@@ -2,12 +2,6 @@
 
 using namespace std;
 
-int main() {
-
-  cout << "Hello World" << endl;
-  return 0;
-}
-
 /**
  * Find a sequence of operators that will achieve all of the goal states.
  *
@@ -15,7 +9,7 @@ int main() {
  * None if no such sequence exists. Each operator is specified by an action name,
  * list of preconditions, and add-list, and a delete-list.
  */
-vector<string> solve( vector<string> init_states,
+vector<string> gps( vector<string> init_states,
                       vector<string> goal_states,
                       vector<Operator> operators ) {
 
@@ -23,9 +17,21 @@ vector<string> solve( vector<string> init_states,
   for ( Operator op : operators ) { // access by ref.  to avoid copying
     op.add.push_back( prefix + op.action );
   }
+  stack<string> goal_stack = stack<string>();
+  vector<string> final_states = achieve_all(init_states,
+                                            operators,
+                                            goal_states,
+                                            goal_stack);
 
-  vector<string> v {"hello"};
-  return v;
+  vector<string> prefixed_final;
+  if ( final_states.empty() ) {
+    return {}; // empty vector
+  }
+  else {
+    copy_if(final_states.begin(), final_states.end(),
+            prefixed_final.begin(), prefixed_state());
+  }
+  return prefixed_final;
 }
 
 // ACHIEVING SUB-GOALS //

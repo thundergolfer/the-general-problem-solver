@@ -76,6 +76,11 @@ int main() {
     //op.remove = obj.at("delete");
     ops.push_back(op);
   }
+  vector<string> results = gps(start, finish, ops);
+  for (auto const& c : results ) {
+    cout << c << ' ';
+  }
+  cout << endl;
   //for action in gps(start, finish, ops):
       //print action
 

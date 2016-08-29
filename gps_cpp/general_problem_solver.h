@@ -5,6 +5,7 @@
 #include <vector>
 #include <stack>
 #include <string>
+#include <algorithm>
 
 struct Operator {
   std::string action;
@@ -14,13 +15,29 @@ struct Operator {
 };
 
 /**
+ * Check whether a string starts with "Executing". True, if yes.
+ */
+struct prefixed_state {
+  bool operator()( std::string s ) {
+    if (s.find("Executing ") == 0)
+    {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+};
+
+
+/**
  * Find a sequence of operators that will achieve all of the goal states.
  *
  * Returns a list of actions that will achieve all of the goal states, or
  * None if no such sequence exists. Each operator is specified by an action name,
  * list of preconditions, and add-list, and a delete-list.
  */
-std::vector<std::string> solve( std::vector<std::string> init_states,
+std::vector<std::string> gps( std::vector<std::string> init_states,
                       std::vector<std::string> goal_states,
                       std::vector<Operator> operators );
 
