@@ -50,7 +50,7 @@ std::vector<std::string> gps( std::vector<std::string> init_states,
 std::vector<std::string> achieve_all( std::vector<std::string> states,
                             std::vector<Operator> ops,
                             std::vector<std::string> goals,
-                            std::stack<std::string> goal_stack );
+                            std::vector<std::string>& goal_stack );
 /**
  * Achieve the goal state using means-ends analysis.
  *
@@ -62,7 +62,7 @@ std::vector<std::string> achieve_all( std::vector<std::string> states,
 std::vector<std::string> achieve( std::vector<std::string> states,
                         std::vector<Operator> operators,
                         std::string goal,
-                        std::stack<std::string> goal_stack );
+                        std::vector<std::string>& goal_stack );
 
 // USING OPERATORS //
 
@@ -78,6 +78,6 @@ std::vector<std::string> apply_operator( Operator op,
                                std::vector<std::string> states,
                                std::vector<Operator> ops,
                                std::string goal,
-                               std::stack<std::string> goal_stack );
+                               std::vector<std::string>& goal_stack );
 
 #endif
