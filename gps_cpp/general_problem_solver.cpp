@@ -97,7 +97,39 @@ vector<string> apply_operator( Operator op,
                                vector<Operator> ops,
                                string goal,
                                vector<string>& goal_stack ) {
+  if(DEBUG) {
+    cout << goal_stack.size() << '\n';
+    cout << "Consider: " + op.action << '\n';
+  }
 
-  vector<string> v {"hello"};
-  return v;
+  // Satisfy all of operator's preconditions
+  goal_stack.push_back(goal);
+  vector<string> result = achieve_all(states, ops,
+                                      op.preconds,
+                                      goal_stack); // should goal be on end or at start?
+  if( result.empty() ) {
+    return {};
+  }
+
+  if(DEBUG) {
+    cout << goal_stack.size() << '\n';
+    cout << "Action: " + op.action << '\n';
+  }
+
+  // Merge the old states with operator's add-list, filtering out delete-list.
+  vector<string> add_list = op.add;
+  vector<string> del_list = op.remove;
+  vector<string> new_result = {};
+  for( auto const& state: result ) {
+    if( find( del_list.begin(), del_list.end(), state ) != del_list.end() ) {
+      continue;
+    }
+    else {
+      new_result.push_back(state);
+    }
+  }
+  for( auto const& state: add_list) {
+    new_result.push_back(state);
+  }
+  return new_result;
 } // end apply_operator()
