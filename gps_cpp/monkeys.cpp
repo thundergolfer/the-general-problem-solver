@@ -1,6 +1,8 @@
 #include "json.hpp"
 #include "general_problem_solver.h"
 
+#define DEBUG 0 // set to 1 for debugging
+
 // for convenience
 using json = nlohmann::json;
 using namespace std;
@@ -72,17 +74,21 @@ int main() {
     Operator op = {};
     op.action = obj["action"];
     op.preconds = jsonArrayToVec(obj["preconds"]);
-    //op.add = obj.at("add");
-    //op.remove = obj.at("delete");
+    op.add = jsonArrayToVec(obj["add"]);
+    op.remove = jsonArrayToVec(obj["delete"]);
     ops.push_back(op);
   }
-  vector<string> results = gps(start, finish, ops);
-  for (auto const& c : results ) {
-    cout << c << ' ';
+  if(DEBUG) {
+    cout << "Op Actions : ";
+    for( auto const& op: ops ) {
+      cout << op.action + ", ";
+    }
+    cout << '\n';
   }
-  cout << endl;
-  //for action in gps(start, finish, ops):
-      //print action
+  vector<string> result_actions = gps(start, finish, ops);
+  for( auto const& action : result_actions ) {
+    cout << action << '\n';
+  }
 
   return 0;
 }

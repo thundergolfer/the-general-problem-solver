@@ -2,7 +2,7 @@
 
 using namespace std;
 
-#define DEBUG 1
+#define DEBUG 0 // set to 1 for debuggig
 
 /**
  * Find a sequence of operators that will achieve all of the goal states.
@@ -13,10 +13,10 @@ using namespace std;
  */
 vector<string> gps( vector<string> init_states,
                       vector<string> goal_states,
-                      vector<Operator> operators ) {
+                      vector<Operator>& operators ) {
 
   string prefix = "Executing ";
-  for ( Operator op : operators ) { // access by ref.  to avoid copying
+  for ( Operator& op : operators ) { // access by ref.  to avoid copying
     op.add.push_back( prefix + op.action );
   }
   vector<string> goal_stack = vector<string>();
@@ -24,21 +24,24 @@ vector<string> gps( vector<string> init_states,
                                             operators,
                                             goal_states,
                                             goal_stack);
-  vector<string> prefixed_final;
+  vector<string> prefixed_final (final_states.size());
   if ( final_states.empty() ) {
+    if( DEBUG ) { cout << "Final states empty returning empty\n"; }
     return {}; // empty vector
   }
   else {
-    copy_if(final_states.begin(), final_states.end(),
+    auto it = copy_if(final_states.begin(), final_states.end(),
             prefixed_final.begin(), prefixed_state());
+    prefixed_final.resize(distance(prefixed_final.begin(), it)); // shrink container to new size
   }
+  if(DEBUG && prefixed_final.empty()) { cout << "prefixed_final is empty after copy().\n"; }
   return prefixed_final;
 }
 
 // ACHIEVING SUB-GOALS //
 
 vector<string> achieve_all( vector<string> states,
-                            vector<Operator> ops,
+                            vector<Operator>& ops,
                             vector<string> goals,
                             vector<string>& goal_stack ) {
   // Try achieve each goal in the order they are given. If any one
@@ -46,7 +49,16 @@ vector<string> achieve_all( vector<string> states,
   for (auto const& goal : goals ) {
     states = achieve( states, ops, goal, goal_stack );
     if ( states.empty() ) {
+      if(DEBUG) { cout << "can't achieve <" + goal + ">. returning empty\n"; }
       return {};
+    }
+  }
+  if(DEBUG) {
+    for( auto const& op : ops ) {
+      for( auto const& state : op.add ) {
+        cout << state;
+      }
+      cout << '\n';
     }
   }
   // Ensure we haven't removed a goal state in the process of solving
@@ -66,13 +78,19 @@ vector<string> achieve( vector<string> states,
                         vector<string>& goal_stack ) {
   vector<string> result;
   if(DEBUG) {
-    cout << goal_stack.size() << '\n';
+    cout << "Goal Stack size: " + to_string(goal_stack.size()) << '\n';
     cout << "Acheiving: " + goal << '\n';
+  }
+
+  // check if the state already holds before we do anything
+  if( find(states.begin(), states.end(), goal) != states.end() ) {
+    return states;
   }
 
   // prevent going in circles. if the current goal in is the goal stack
   // it means we are already trying to achieve it by way of achieving... itself
   if( find( goal_stack.begin(), goal_stack.end(), goal ) != goal_stack.end() ) {
+    if(DEBUG) { cout << "found goal in goal_stack. we are in a circle!\n"; }
     return {};
   }
 
@@ -86,7 +104,9 @@ vector<string> achieve( vector<string> states,
     if ( !result.empty() ) {
       return result;
     }
+    if(DEBUG) { cout << "Action: " + op.action + " couldn't be applied.\n"; }
   }
+  if(DEBUG) { cout << "Couldn't find appropiate operator to apply. returning empty.\n"; }
   return {};
 } // end achieve()
 

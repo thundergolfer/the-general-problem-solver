@@ -17,13 +17,15 @@ struct Operator {
 /**
  * Check whether a string starts with "Executing". True, if yes.
  */
-struct prefixed_state {
+class prefixed_state {
+public:
   bool operator()( std::string s ) {
     if (s.find("Executing ") == 0)
     {
       return true;
     }
     else {
+      std::cout << "it's false " + s << '\n';
       return false;
     }
   }
@@ -38,8 +40,8 @@ struct prefixed_state {
  * list of preconditions, and add-list, and a delete-list.
  */
 std::vector<std::string> gps( std::vector<std::string> init_states,
-                      std::vector<std::string> goal_states,
-                      std::vector<Operator> operators );
+                              std::vector<std::string> goal_states,
+                              std::vector<Operator>& operators );
 
 /**
  * Achieve each state in goals and make sure they still hold at then end.
@@ -48,9 +50,9 @@ std::vector<std::string> gps( std::vector<std::string> init_states,
  * trying to satisfy by achieving the specified goals?
  */
 std::vector<std::string> achieve_all( std::vector<std::string> states,
-                            std::vector<Operator> ops,
-                            std::vector<std::string> goals,
-                            std::vector<std::string>& goal_stack );
+                                      std::vector<Operator>& ops,
+                                      std::vector<std::string> goals,
+                                      std::vector<std::string>& goal_stack );
 /**
  * Achieve the goal state using means-ends analysis.
  *
@@ -60,9 +62,9 @@ std::vector<std::string> achieve_all( std::vector<std::string> states,
  * operator is found or infinite recursion is detected in the goal stack.
  */
 std::vector<std::string> achieve( std::vector<std::string> states,
-                        std::vector<Operator> operators,
-                        std::string goal,
-                        std::vector<std::string>& goal_stack );
+                                  std::vector<Operator> operators,
+                                  std::string goal,
+                                  std::vector<std::string>& goal_stack );
 
 // USING OPERATORS //
 
@@ -75,9 +77,9 @@ std::vector<std::string> achieve( std::vector<std::string> states,
  *
  */
 std::vector<std::string> apply_operator( Operator op,
-                               std::vector<std::string> states,
-                               std::vector<Operator> ops,
-                               std::string goal,
-                               std::vector<std::string>& goal_stack );
+                                         std::vector<std::string> states,
+                                         std::vector<Operator> ops,
+                                         std::string goal,
+                                         std::vector<std::string>& goal_stack );
 
 #endif
