@@ -1,18 +1,22 @@
 
 import java.util.*;
 
-public ArrayList<String> gps( ArrayList<String> initial_states, ArrayList<String> goal_states,
-							 									 Operator[] operators ) {
+/**
+ * Find a sequence of operators from the set that will achieve all of the goal states.
+ * Returns a list of actions that will achieve all of the goal states, or None if no such sequence exists.
+ * Each operator is specified by an action name, a list of preconditions, an add-list, and a delete-list.
+ */
+public List<String> gps( List<String> initial_states, List<String> goal_states, Operator[] operators ) {
 
 	String prefix = "Executing ";
-	ArrayList<String> final_states = new ArrayList<String>();
-	ArrayList<String> prefixed_final_states = new ArrayList<String>();
+	List<String> final_states = new ArrayList<String>();
+	List<String> prefixed_final_states = new ArrayList<String>();
 
 	for( Operator op : operators ) {
 		op.add_to_add_list(prefix + op.action);
 	}
 
-	final_states = achieve_all( initial_states, operators, goal_states)
+	final_states = achieve_all( initial_states, operators, goal_states )
 
 	if(final_states.isEmpty()) {
 		return null;
@@ -38,8 +42,8 @@ public ArrayList<String> gps( ArrayList<String> initial_states, ArrayList<String
  *  The goal stack keeps track of our recursion: which preconditions are we
  *  trying to satisfy by achieving the specified goals?
  */ 
-public ArrayList<String> achieve_all( ArrayList<String> states,  Operator[] ops,
-									  ArrayList<String> goals, ArrayList<String> goal_stack ) {
+public List<String> achieve_all( List<String> states,  Operator[] ops,
+							 	 List<String> goals, List<String> goal_stack ) {
 
 	states = new ArrayList<String>();
 	// We try to acheive each goal in the order they are given. If any one goal state cannot
@@ -69,9 +73,9 @@ public ArrayList<String> achieve_all( ArrayList<String> states,  Operator[] ops,
  *  Applies the operator and returns the result.  Returns None if no such
  *  operator is found or infinite recursion is detected in the goal stack.
  */
-public ArrayList<String> achieve( ArrayList<String> states, Operator[] operators, String goal, ArrayList<String> goal_stack ) {
+public List<String> achieve( List<String> states, Operator[] operators, String goal, List<String> goal_stack ) {
 
-	ArrayList<String> result = new ArrayList<String>();
+	List<String> result = new ArrayList<String>();
 
 	// Check to see if the state already holds before we do anything
 	if(states.containsAll(goal)) {
@@ -112,11 +116,11 @@ public ArrayList<String> achieve( ArrayList<String> states, Operator[] operators
  *   after processing its add-list and delete-list.  If any of its preconditions
  *   cannot be satisfied, returns None.
  */
-public ArrayList<String> apply_operator( Operator operator, ArrayList<String> states, Operator[] ops,
-												ArrayList<String> goals, ArrayList<String> goal_stack ) {
+public List<String> apply_operator( Operator operator, List<String> states, Operator[] ops,
+									List<String> goals, List<String> goal_stack ) {
 
-	ArrayList<String> result = new ArrayList<String>();
-	ArrayList<String> new_states = new ArrayList<String>();
+	List<String> result = new ArrayList<String>();
+	List<String> new_states = new ArrayList<String>();
 	// add all of goal's states into goal stack
 	for( String goal : goals ) {
 		goal_stack.add(goal);
@@ -146,6 +150,9 @@ public ArrayList<String> apply_operator( Operator operator, ArrayList<String> st
 
 } // end of apply_operator()
 
+/**
+ * A class to hold the data required of an operator in the GPS algorithm.
+ */
 class Operator {
 	public String action;
 	private ArrayList<String> preconditions;
@@ -160,11 +167,11 @@ class Operator {
 		this.del_list = del_list;
 	}
 
-	public ArrayList<String> get_preconds() {
+	public List<String> get_preconds() {
 		return preconditions;
 	}
 
-	public ArrayList<String> get_add_list() {
+	public List<String> get_add_list() {
 		return add_list;
 	}
 
@@ -180,7 +187,7 @@ class Operator {
 		// this could be awkward code
 	}
 
-	public ArrayList<String> get_del_list() {
+	public List<String> get_del_list() {
 		return del_list;
 	}
 }
