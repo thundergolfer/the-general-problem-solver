@@ -8,10 +8,11 @@ Herbert Simon, J.C Shaw and Allen Newell's General Problem Solver Program (GPS) 
 ### Languages Implemented So Far
 
 * [Common Lisp](/general_problem_solver.lisp)
-* [Python](/general_problem_solver.py)
-* [Java](/general_problem_solver.java)
 * [C](/general_problem_solver_C/) (In Progress...)  
-* [C++](/gps_cpp/) 
+* [C++](/gps_cpp/)
+* [Go](/gps_golang/) (In Progress...)
+* [Java](/general_problem_solver.java)
+* [Python](/general_problem_solver.py)
 
 ### Other Resources For Understanding
 
