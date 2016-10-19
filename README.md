@@ -5,6 +5,8 @@
 
 Herbert Simon, J.C Shaw and Allen Newell's General Problem Solver Program (GPS) is one of the earliest AI program in existence, succeeding the [Logic Theorist Program](https://en.wikipedia.org/wiki/Logic_Theorist) which arguably was the first AI program. The repo contains implementations of the GPS in multiple programming languages.
 
+##### *I made a video working through the python implementation of this algorithm. It's available [here on Youtube](https://www.youtube.com/watch?v=odLCF4v-yeM)*
+
 ### Languages Implemented So Far
 
 * [Common Lisp](/general_problem_solver.lisp)
