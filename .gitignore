@@ -124,3 +124,6 @@ ENV/
 *.app
 
    Contact GitHub API Training Shop Blog About
+
+## Javascript specific ignores
+gps_javascript/node_modules/*
