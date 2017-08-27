@@ -1,6 +1,53 @@
 
-var gps = ( initial_states, goal_states, operators ) => {
-  console.log('what what!');
+/**
+* Find a sequence of operators that will achieve all of the goal states.
+* Returns a list of actions that will achieve all of the goal states, or
+* None if no such sequence exists.  Each operator is specified by an
+* action name, a list of preconditions, an add-list, and a delete-list.
+*/
+var gps = ( initialStates, goalStates, operators ) => {
+  // To keep track of which operators have been applied, we add additional
+  // 'executing ...' states to each operator's add-list.  These will never be
+  // deleted by another operator, so when the problem is solved we can find
+  // them in the list of current states.
+  var prefix = 'Executing ';
+  operators.forEach(function (operator) {
+    operator.add.push(prefix + operator.action);
+  });
+
+  var finalStates = achieveAll(initialStates, operators, goalStates, []);
+
+  if (!finalStates.length) return false;
+
+  var actions = finalStates.filter(function(elem) {
+    return elem.startsWith(prefix);
+  });
+
+  return actions;
+};
+
+/**
+* Achieve each state in goals and make sure they still hold at the end.
+* The goal stack keeps track of our recursion: which preconditions are we
+* trying to satisfy by achieving the specified goals?
+*/
+var achieveAll = ( states, ops, goals, goalStack ) => {
+  // We try to achieve each goal in the order they are given.  If any one
+  // goal state cannot be achieved, then the problem cannot be solved.
+  goals.forEach(function (goal) {
+    states = achieve(states, ops, goal, goalStack);
+    debugger;
+    if (!states.length) return [];
+  });
+
+  // We must ensure that we haven't removed a goal state in the process of
+  // solving other states--having done so is called the "prerequisite clobbers
+  // sibling goal problem".
+  goals.forEach(function (goal) {
+    if (states && states.indexOf(goal) < 0) return [];
+  });
+
+  return states;
 };
 
 /**
@@ -11,10 +58,8 @@ var gps = ( initial_states, goal_states, operators ) => {
 * operator is found or infinite recursion is detected in the goal stack.
 */
 var achieve = ( states, operators, goal, goalStack ) => {
-  console.log(goalStack, `Achieving: ${goal}`);
-
   // Let's check to see if the state already holds before we do anything.
-  if (states.indexOf(goal) >= 0) {
+  if (states && states.indexOf(goal) >= 0) {
     return states;
   }
 
@@ -26,23 +71,25 @@ var achieve = ( states, operators, goal, goalStack ) => {
   // satisfy the preconditions for another operator that contains A in its
   // preconditions.
   if (goalStack.indexOf(goal) >= 0) {
-    return null;
+    return [];
   }
 
-  operators.forEach(function (value) {
+  var result = [];
+
+  for(var op of operators) {
     // Is operator appropriate?  Look through its add-list to see if goal is there.
     if (op.add.indexOf(goal) < 0) {
-      continue;
+      continue
     }
 
     // Is op applicable?  Try to apply it--if one of its preconditions cannot
     // be satisifed, then it will return null.
-    var result = applyOperator(op, states, operators, goal, goalStack);
+    result = applyOperator(op, states, operators, goal, goalStack);
 
-    if (result): return result;
-  });
+    if (!!result.length) return result;
+  }
 
-  return null; // TODO check this
+  return []; // TODO check this
 };
 
 
@@ -53,13 +100,10 @@ var achieve = ( states, operators, goal, goalStack ) => {
 * cannot be satisfied, returns null.
 */
 var applyOperator = ( operator, states, ops, goal, goalStack ) => {
-  console.log(goalStack, `Considering: ${operation.action}`);
+  // console.log('Goal stack: ', goalStack, `Considering: ${operator.action}`);
 
-  var result = acheiveAll(states, ops, operation.preconds, [goal].concat(goalStack));
-
-  if (!result) return null;
-
-  console.log(goalStack, `Action: ${operator.action}`);
+  var result = achieveAll(states, ops, operator.preconds, [goal].concat(goalStack));
+  if (!result.length) return [];
 
   // Merge the old state with the operator's add-list, filtering out the operator's delete list
   var addList = operator.add;
