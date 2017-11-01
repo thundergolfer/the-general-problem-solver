@@ -127,3 +127,6 @@ ENV/
 
 ## Javascript specific ignores
 gps_javascript/node_modules/*
+
+## Nim specific ignores
+gps_nim/nimcache/*
