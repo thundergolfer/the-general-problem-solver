@@ -18,6 +18,7 @@ Herbert Simon, J.C Shaw and Allen Newell's General Problem Solver Program (GPS) 
 * [Javascript](/gps_javascript)
 * [Python](gps_python/general_problem_solver.py)
 * [Ruby](gps_ruby/general_problem_solver.rb) (In Progress...)
+* [Typescript](gps_typescript/)
 
 ### Other Resources For Understanding
 

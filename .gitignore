@@ -127,3 +127,4 @@ ENV/
 
 ## Javascript specific ignores
 gps_javascript/node_modules/*
+gps_typescript/node_modules/*
