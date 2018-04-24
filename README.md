@@ -2,7 +2,7 @@
   <img src="/images/gps_diagram.jpg"/>
 </p>
 
-# The General Problem Solver Program [![Code Climate](https://codeclimate.com/github/thundergolfer/the-general-problem-solver/badges/gpa.svg)](https://codeclimate.com/github/thundergolfer/the-general-problem-solver) [![Issue Count](https://codeclimate.com/github/thundergolfer/the-general-problem-solver/badges/issue_count.svg)](https://codeclimate.com/github/thundergolfer/the-general-problem-solver)
+# The General Problem Solver Program [![Issue Count](https://codeclimate.com/github/thundergolfer/the-general-problem-solver/badges/issue_count.svg)](https://codeclimate.com/github/thundergolfer/the-general-problem-solver)
 
 Herbert Simon, J.C Shaw and Allen Newell's General Problem Solver Program (GPS) is one of the earliest AI program in existence, succeeding the [Logic Theorist Program](https://en.wikipedia.org/wiki/Logic_Theorist) which arguably was the first AI program. The repo contains implementations of the GPS in multiple programming languages.
 
